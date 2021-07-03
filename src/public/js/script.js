@@ -14,17 +14,18 @@ function getAllFiles() {
 }
 
 function refreshFilesInPage(data) {
-    const html = [[], []]
+    const html = ["", ""]
 
     for (const elem of data) {
-        html[0].push(`<b>Nombre: </b>${elem.name}, <b>extension: </b>${elem.extension}<br>`)
+        html[0] += (`<b>Nombre: </b>${elem.name}, <b>extension: </b>${elem.extension}<br>`)
         const nameFile = `${elem.name}${elem.extension}`
 
-        html[1].push(`<b>Nombre: </b>${nameFile} - <a href="/data/${nameFile}">Link</a><br>`)
+        html[1] += (`<b>Nombre: </b>${nameFile} - <a href="/data/${nameFile}">Link</a><br>`)
     }
-
-    html[0].forEach(element => document.write(element));
-    document.write('<br>')
-    html[1].forEach(element => document.write(element));
+    const app = document.getElementById("data")
+    // html[0].forEach(element => app.innerHTML = element);
+    app.innerHTML = html[0] + '<br>' + html[1]
+    // app.innerHTML = '<br>';
+    // html[1].forEach(element => app.innerHTML = element);
 
 }
