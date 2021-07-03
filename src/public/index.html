@@ -19,21 +19,35 @@
             </button>      
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Inicio
-                            <span class="visually-hidden">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Subir</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Inicio<span class="visually-hidden">(current)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#upload">Subir</a></li>
                 </ul>
           </div>
         </div>
     </nav>
     <div class="container">
-        <div id="data"></div>
-    </div>
+        <h2>Mis Archivos:</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Ext.</th>
+                    <th scope="col">Abrir</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+        <div class="upload" id="upload">
+            <form>
+                <hr>
+                <fieldset>
+                    <legend>Subir archivos:</legend>
+                    <div class="form-group"><input id="input" class="form-control" type="file"></div>
+                </fieldset><br>
+                <div class="d-grid gap-2"><button id="uploadFile" class="btn btn-lg btn-primary" type="button">Subir</button></div>
+            </form>
+        </div>
+    </div><br><br><br><br>
     <script src="js/script.js"></script>
 </body>
 </html>

@@ -8,9 +8,42 @@ function getAllFiles() {
     .then(data => {
         sessionStorage.setItem("allFiles", JSON.stringify(data))
         console.log(data)
-        refreshFilesInPage(data)
+        // refreshFilesInPage(data) 
+        showMyFilesInHtml(data)
     })
     .catch(error => console.error(error))
+}
+
+function showMyFilesInHtml(data) {
+    const tbody = document.getElementById("tbody")
+    for (const file of data)
+    {
+        const tr = document.createElement("tr")
+        tr.classList.add("table-active")
+        const thName = document.createElement("th")
+        thName.scope = "row"
+        thName.appendChild(document.createTextNode(file.name))
+
+        const tdExtension = document.createElement("th")
+        tdExtension.appendChild(document.createTextNode(file.extension))
+        
+        const tdLink = document.createElement("th")
+        const aLink = document.createElement("a")
+        aLink.href = `/data/${file.name}${file.extension}`
+        aLink.appendChild(document.createTextNode("Abrir"))
+        tdLink.appendChild(aLink)
+        tr.appendChild(thName)
+        tr.appendChild(tdExtension)
+        tr.appendChild(tdLink)
+        tbody.appendChild(tr)
+    }
+
+    // <tr class="table-primary table-active">
+    //     <th scope="row">un nombre</th>
+    //     <td>una extension</td>
+    //     <td><a href="">Descargar</a></td>
+    // </tr>
+
 }
 
 function refreshFilesInPage(data) {
