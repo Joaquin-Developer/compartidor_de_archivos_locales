@@ -2,12 +2,14 @@ const express = require("express")
 const app = express()
 const cors = require("cors")
 const path = require("path")
+const fileUpload = require('express-fileupload')
 
 // settings:
 app.set("port", process.env.PORT || 5000)
-app.use(cors({ }))
+app.use(cors({ }))  // missing config
 app.use(express.json()) // read json
 app.use(express.urlencoded({ extended: false }))    // read html forms
+app.use(fileUpload())
 
 // routes:
 app.use("/api", require("./routes/api.routes"))

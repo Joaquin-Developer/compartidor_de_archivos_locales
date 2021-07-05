@@ -1,4 +1,5 @@
 const API = 'http://192.168.1.6:5000/api'
+const fileField = document.getElementById("inputFile")
 
 addEventListener("load", getAllFiles)
 
@@ -7,8 +8,6 @@ function getAllFiles() {
     .then(response => response.json())
     .then(data => {
         sessionStorage.setItem("allFiles", JSON.stringify(data))
-        console.log(data)
-        // refreshFilesInPage(data) 
         showMyFilesInHtml(data)
     })
     .catch(error => console.error(error))
@@ -38,12 +37,42 @@ function showMyFilesInHtml(data) {
         tbody.appendChild(tr)
     }
 
-    // <tr class="table-primary table-active">
-    //     <th scope="row">un nombre</th>
-    //     <td>una extension</td>
-    //     <td><a href="">Descargar</a></td>
-    // </tr>
+}
 
+document.getElementById("uploadFile").addEventListener("click", (event) => {
+    event.preventDefault();
+    const file = fileField.files[0]
+    if (file) {
+        const formData = new FormData()
+        formData.append("file", file)
+        uploadFile(formData)
+
+    } else {
+        alert("Debe seleccionar un archivo")
+    }
+
+})
+
+function uploadFile(formData) {
+    fetch(`${API}/upload`, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => {
+        if (response.status == 200) {
+            alert("Archivo publicado con éxito.")
+        } else {
+            alert("Error: No se pudo subir el archivo.")
+        }
+        return response.json()
+    })
+    .then(json => {
+        console.log(json.message)
+    })
+    .catch(error => {
+        console.error(error)
+    })
+    
 }
 
 function refreshFilesInPage(data) {
