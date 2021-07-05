@@ -27,5 +27,10 @@ module.exports = class Files {
         file.mv(`${path}/${file.name}` /*, err => { throw err }*/)
     }
 
+    static deleteFile(filename)
+    {
+        console.log(filename)
+    }
+
 
 }

@@ -1,10 +1,11 @@
 const API = 'http://192.168.1.6:5000/api'
 const fileField = document.getElementById("inputFile")
+const selectRemove = document.getElementById("selectRemoveFiles")
 
 addEventListener("load", getAllFiles)
 
 function getAllFiles() {
-    fetch(`${API}/`)
+    fetch(`${API}/getAllFiles`)
     .then(response => response.json())
     .then(data => {
         sessionStorage.setItem("allFiles", JSON.stringify(data))
@@ -14,7 +15,10 @@ function getAllFiles() {
 }
 
 function showMyFilesInHtml(data) {
+    removeChildrensFromElement()
+
     const tbody = document.getElementById("tbody")
+
     for (const file of data)
     {
         const tr = document.createElement("tr")
@@ -50,7 +54,14 @@ document.getElementById("uploadFile").addEventListener("click", (event) => {
     } else {
         alert("Debe seleccionar un archivo")
     }
+})
 
+selectRemove.addEventListener("change", () => {
+    const filename = selectRemove.options[selectRemove.selectedIndex]
+    if (filename.value != 0) {
+        deleteFile(filename.text)
+    }
+    
 })
 
 function uploadFile(formData) {
@@ -72,7 +83,32 @@ function uploadFile(formData) {
     .catch(error => {
         console.error(error)
     })
+
+    getAllFiles()
+}
+
+function deleteFile(filename) {
     
+    fetch(`${API}/delete/${filename}`, {
+        method: "DELETE"
+    })
+    .then(response => {
+        if (response.status == 200) {
+            alert("Archivo eliminado con éxito.")
+        } else {
+            alert("Error: No se pudo realizar la acción.")
+        }
+        return response.json()
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error(error))
+}
+
+
+function removeChildrensFromElement(element = tbody) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild)
+    }
 }
 
 function refreshFilesInPage(data) {

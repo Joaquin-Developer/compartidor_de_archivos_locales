@@ -23,4 +23,9 @@ controller.getAllFiles = async (req, res) => {
     res.json(myFiles)
 }
 
+controller.deleteFile = (req, res) => {
+    Files.deleteFile(req.params.name)
+    res.status(200).json("ok")
+}
+
 module.exports = controller
