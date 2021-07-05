@@ -8,8 +8,9 @@ function getAllFiles() {
     fetch(`${API}/getAllFiles`)
     .then(response => response.json())
     .then(data => {
-        sessionStorage.setItem("allFiles", JSON.stringify(data))
+        localStorage.setItem("allFiles", JSON.stringify(data))
         showMyFilesInHtml(data)
+        addFilenamesInSelect()
     })
     .catch(error => console.error(error))
 }
@@ -88,7 +89,7 @@ function uploadFile(formData) {
 }
 
 function deleteFile(filename) {
-    
+
     fetch(`${API}/delete/${filename}`, {
         method: "DELETE"
     })
@@ -108,6 +109,25 @@ function deleteFile(filename) {
 function removeChildrensFromElement(element = tbody) {
     while (element.firstChild) {
         element.removeChild(element.firstChild)
+    }
+}
+
+function addFilenamesInSelect() {
+    const allFiles = JSON.parse(localStorage.getItem("allFiles"))
+
+    // first, delete the childs:
+    removeChildrensFromElement(selectRemove)
+    // then, add the option by default
+    const defaultOption = document.createElement("option")
+    defaultOption.value = "0"
+    defaultOption.text = "Seleccionar nombre"
+    selectRemove.appendChild(defaultOption)
+    
+    // and finally, add the options with the file names:
+    for (const file of allFiles) {
+        const optionElement = document.createElement("option")
+        optionElement.appendChild(document.createTextNode(file.name))
+        selectRemove.appendChild(optionElement)
     }
 }
 

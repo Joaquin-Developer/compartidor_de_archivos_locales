@@ -22,9 +22,22 @@ async function read() {
     }
 }
 
+function deleteFile(filename) {
+    const { readdir, unlink } = require('fs/promises')
+    const { exists } = require("fs")
+
+    exists(filename, (e) => {
+        console.log(e ? 'it exists' : 'no exists');
+      });
+    
+}
+
 (async () => {
-    const myFiles = await read()
-    console.log(myFiles)
+    // const myFiles = await read()
+    // console.log(myFiles)
+
+    deleteFile(`${path}/screen.jpeg`)
+
 })();
 
 

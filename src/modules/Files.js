@@ -1,6 +1,6 @@
 const ppRoute = process.env["PP_ROUTE"]
 const path = `${ppRoute}/compartidor_de_archivos_locales/src/public/data`
-const { readdir } = require('fs/promises')
+const { readdir, unlink, exists } = require('fs/promises')
 
 module.exports = class Files {
 
@@ -30,6 +30,9 @@ module.exports = class Files {
     static deleteFile(filename)
     {
         console.log(filename)
+        console.log(exists(`${path}/${filename}`))
+
+        // unlink(filename);
     }
 
 
